@@ -7,6 +7,19 @@ dataset <- read.csv("repdata-data-StormData.csv.bz2", sep = ",", header = TRUE)
 dataset_pop <- dataset[,c("EVTYPE", "FATALITIES", "INJURIES")]
 dataset_econ <- dataset[,c("EVTYPE", "PROPDMG", "PROPDMGEXP", "CROPDMG", "CROPDMGEXP")]
 
+url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+destination <- "repdata-data-StormData.csv.bz2"
+download.file(url, destination)
+dataset <- read.csv("repdata-data-StormData.csv.bz2", sep = ",", header = TRUE)
+
+## Cut out all useless data, we don't need observations that are entirely 0 because they have no impact on population healh and/or economy
+dataset <- subset(dataset, FATALITIES != 0 | INJURIES != 0 | PROPDMG != 0 | CROPDMG != 0)
+## Since we're studying "acorss the US" we're going to eliminate all location data. In addition, in order to addres the research questions in the strictest sense, all time data is removed as well. However, the frequency of certain weather events over time should be considere in following research. 
+dataset <- dataset[,c("EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "PROPDMGEXP", "CROPDMG", "CROPDMGEXP")]
+
+dataset_test <- dataset_test[grep("/", EVTYPE, ignore.case = TRUE, invert = TRUE),] 
+dataset_test <- dataset_test[grep("summary", EVTYPE, ignore.case = TRUE, invert = TRUE),] 
+dataset_test <- dataset_test[grep("[0-9]", EVTYPE, ignore.case = TRUE, invert = TRUE),] 
 
 
 The plan
@@ -22,7 +35,4 @@ The plan
 6) ...
 7) PROFIT
 
-
-http://www.nws.noaa.gov/wsom/manual/archives/NF429405.HTML 
-https://rstudio-pubs-static.s3.amazonaws.com/66795_4a9bc7395ee040f5a4c17ed4a0523f42.html
-http://rstudio-pubs-static.s3.amazonaws.com/13862_7c245f564aa04c438e482ab3565753be.html 
+http://www.gnu.org/software/grep/manual/html_node/Character-Classes-and-Bracket-Expressions.html
