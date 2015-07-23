@@ -111,3 +111,7 @@ dataset_econ <- ddply(dataset, "EVTYPE", summarize, ECODMG_sum = sum(ECODMG))
 dataset_econ <- subset(dataset_econ, ECODMG_sum > 15000000000)
 qplot(x = EVTYPE, y = ECODMG_sum, data = dataset_econ, geom = 'bar', stat = "identity") + labs(title = "Total Economic Cost Per Severe Weather Event", x = "Severe Weather Event", y = "Total Economic Cost")
 ```
+
+Do the figure(s) have descriptive captions (i.e. there is a description near the figure of what is happening in the figure)?
+
+EXPLAIN RESULTS, ANSWER ABOVE QUESTION AND AND YOU`RE DONE
